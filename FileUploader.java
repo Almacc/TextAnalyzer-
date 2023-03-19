@@ -15,7 +15,7 @@ public class FileUploader extends JFrame implements ActionListener {
 
 
     public FileUploader() {
-        setTitle("File Uploader");
+        setTitle("Word Occurrences");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 700);
         setLocationRelativeTo(null);
