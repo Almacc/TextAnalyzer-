@@ -7,13 +7,43 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
+/**
+ * A Swing application that allows users to upload a text file and displays the word occurrences in the file.
+ *
+ * @author Alessandro Maccarrone
+ * @version 1.0
+ * @since   2023-04-08
+ *
+ */
 public class FileUploader extends JFrame implements ActionListener {
 
+    /**
+     * The button used to upload a file.
+     */
     private final JButton uploadButton = new JButton("Upload File");
+
+    /**
+     * The text area used to display the content of the uploaded file.
+     */
     private final JTextArea fileTextArea = new JTextArea(20, 40);
+
+    /**
+     * The text area used to display the word count of the uploaded file.
+     */
     private final JTextArea wordCountTextArea = new JTextArea(20, 40);
 
-
+    /**
+     * Creates a new instance of the FileUploader class, which is a GUI application
+     * for counting the occurrences of words in a file. The constructor sets up the
+     * JFrame window and its components, including two JPanels for displaying the
+     * file content and the word count, respectively. The left panel contains a
+     * JTextArea for displaying the file content and a JButton for uploading a file,
+     * while the right panel contains a JTextArea for displaying the word count. The
+     * constructor also sets various properties for the components, such as their
+     * size, layout, border, background color, font, and margin. Finally, it adds
+     * the two panels to the JFrame window and registers an ActionListener for the
+     * upload button.
+     */
     public FileUploader() {
         setTitle("Word Occurrences");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,11 +86,19 @@ public class FileUploader extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * The main entry point of the application.
+     * @param args The command-line arguments.
+     */
     public static void main(String[] args) {
         FileUploader fileUploader = new FileUploader();
         fileUploader.setVisible(true);
     }
 
+    /**
+     * Called when the user clicks the upload button. Opens a file chooser dialog and reads the selected file.
+     * @param e The event that triggered the action.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
@@ -86,7 +124,12 @@ public class FileUploader extends JFrame implements ActionListener {
         }
     }
 
-    private Map<String, Integer> countWords(String text) {
+    /**
+     * Counts the occurrences of each word in the given text.
+     * @param text The text to count words in.
+     * @return A map of words to their occurrence counts.
+     */
+    Map<String, Integer> countWords(String text) {
         Map<String, Integer> wordCountMap = new HashMap<>();
         String[] words = text.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
         for (String word : words) {
@@ -99,7 +142,20 @@ public class FileUploader extends JFrame implements ActionListener {
         return wordCountMap;
     }
 
-    private String sortMapByValue(Map<String, Integer> wordCountMap) {
+    /**
+     * Sorts a given Map of word counts by their values in descending order and
+     * returns the sorted result as a String. The input Map should have String keys
+     * and Integer values representing the frequency of each word. This method
+     * first converts the Map into a List of Map.Entry objects using a LinkedList,
+     * which allows the entries to be sorted by their values using the
+     * comparingByValue method of the Map.Entry class and a reverse order Comparator.
+     * Then it iterates over the sorted list and constructs a StringBuilder that
+     * appends each word and its frequency to a new line. Finally, it returns the
+     * sorted String as the result.
+     * @param wordCountMap a Map of word counts to be sorted by value
+     * @return a String representation of the sorted word count Map
+     */
+    String sortMapByValue(Map<String, Integer> wordCountMap) {
         List<Map.Entry<String, Integer>> wordCountList = new LinkedList<>(wordCountMap.entrySet());
         wordCountList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
         StringBuilder stringBuilder = new StringBuilder();
